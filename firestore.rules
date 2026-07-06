@@ -1,0 +1,38 @@
+rules_version = '2';
+// NOTE: These rules allow anyone with the app's Firebase config (which is
+// public in the deployed JS anyway) to read AND write every collection below.
+// The admin panel is only gated by a password on the server (see server.ts,
+// ADMIN_PASSWORD), not by these rules -- so someone who bypasses the UI and
+// talks to Firestore directly could still add/delete/edit data.
+// This is a known trade-off (no Firebase Authentication is wired up yet).
+// To close it properly: add Firebase Authentication for the admin, then
+// change `write` below to `write: if request.auth != null` (or check a
+// specific admin UID/custom claim).
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Master-gate for Class settings
+    match /settings/{document} {
+      allow read, write: if true;
+    }
+
+    // Master-gate for Student profiles
+    match /students/{studentId} {
+      allow read, write: if true;
+    }
+
+    // Master-gate for Gallery images
+    match /gallery/{photoId} {
+      allow read, write: if true;
+    }
+
+    // Master-gate for Registration requests
+    match /requests/{requestId} {
+      allow read, write: if true;
+    }
+
+    // Catch-all safety block
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

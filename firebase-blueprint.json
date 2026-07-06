@@ -1,0 +1,136 @@
+{
+  "entities": {
+    "Config": {
+      "title": "Website Configuration Settings",
+      "description": "Customizable texts, metadata, hero assets, and timelines for the class album.",
+      "type": "object",
+      "properties": {
+        "schoolName": {
+          "type": "string",
+          "description": "Official name of the school."
+        },
+        "className": {
+          "type": "string",
+          "description": "Graduating class identifier."
+        },
+        "cohort": {
+          "type": "string",
+          "description": "Year of graduation or Cohort tag."
+        },
+        "aboutText": {
+          "type": "string",
+          "description": "Long form paragraphs recounting the class journey."
+        },
+        "motto": {
+          "type": "string",
+          "description": "Motto or slogan of the class."
+        },
+        "quotes": {
+          "type": "array",
+          "description": "List of inspirational quotes displayed randomly on the index page."
+        },
+        "timeline": {
+          "type": "array",
+          "description": "Timeline milestones showing critical events over school years."
+        },
+        "videoUrl": {
+          "type": "string",
+          "description": "Link to documentary or highlight videos."
+        },
+        "heroImageUrl": {
+          "type": "string",
+          "description": "Custom hero main illustration."
+        },
+        "footerAddress": {
+          "type": "string",
+          "description": "Address of the school."
+        },
+        "footerContact": {
+          "type": "string",
+          "description": "Telephone or contact number."
+        },
+        "footerEmail": {
+          "type": "string",
+          "description": "Official email."
+        }
+      }
+    },
+    "Student": {
+      "title": "Class Member / Student Profile",
+      "description": "Record containing details and metadata of an individual classmate or teacher.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full capitalized name of the member."
+        },
+        "rollNumber": {
+          "type": "number",
+          "description": "Roll or absent list number."
+        },
+        "lastClass": {
+          "type": "string",
+          "description": "Final class name prior to graduation."
+        },
+        "targetSchool": {
+          "type": "string",
+          "description": "Planned next-stage destination."
+        },
+        "tag": {
+          "type": "string",
+          "enum": ["Siswa", "Siswi", "Guru", "Kepala Sekolah", "Wali Kelas", "Satpam", "Staff", "Lainnya"],
+          "description": "Member categorizations."
+        },
+        "memoryWord": {
+          "type": "string",
+          "description": "Optional custom memory quotes or lines."
+        },
+        "photoUrl": {
+          "type": "string",
+          "description": "Secure Firebase Storage download URL of the compressed image."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp indicating when the record was published."
+        }
+      },
+      "required": ["name", "rollNumber", "lastClass", "targetSchool", "tag"]
+    },
+    "Gallery": {
+      "title": "Gallery Memory Image",
+      "description": "Uploaded class event image with descriptive caption and timestamp.",
+      "type": "object",
+      "properties": {
+        "imageUrl": {
+          "type": "string",
+          "description": "Storage URL of the compressed photograph."
+        },
+        "caption": {
+          "type": "string",
+          "description": "Short explanation of the photographed event."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of publication."
+        }
+      },
+      "required": ["imageUrl", "caption"]
+    }
+  },
+  "firestore": {
+    "/settings/config": {
+      "schema": "Config",
+      "description": "Single-document holding layout, labels, and customizable copy."
+    },
+    "/students/{studentId}": {
+      "schema": "Student",
+      "description": "Student cards collection."
+    },
+    "/gallery/{photoId}": {
+      "schema": "Gallery",
+      "description": "Grid items of images."
+    }
+  }
+}
